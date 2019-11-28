@@ -37,4 +37,8 @@ public class ParkingLot {
     public int getFreeSpace() {
         return size - cars.size();
     }
+
+    public boolean hasCar(Token token) {
+        return cars.containsKey(token);
+    }
 }

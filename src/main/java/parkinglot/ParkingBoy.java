@@ -1,5 +1,6 @@
 package parkinglot;
 
+import parkinglot.exception.NotFoundCarException;
 import parkinglot.exception.ParkingLotFullException;
 
 import java.util.List;
@@ -20,7 +21,12 @@ public class ParkingBoy {
         throw new ParkingLotFullException();
     }
 
-    public Car takeCar(Token token) {
-        return null;
+    public Car takeCar(Token token) throws NotFoundCarException {
+        for (ParkingLot parkingLot : parkingLots) {
+            if (parkingLot.hasCar(token)) {
+                return parkingLot.take(token);
+            }
+        }
+        throw new NotFoundCarException();
     }
 }

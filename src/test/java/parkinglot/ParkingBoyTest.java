@@ -1,6 +1,7 @@
 package parkinglot;
 
 import org.junit.Test;
+import parkinglot.exception.NotFoundCarException;
 import parkinglot.exception.ParkingLotFullException;
 
 import java.util.Arrays;
@@ -45,7 +46,7 @@ public class ParkingBoyTest {
 
 
     @Test
-    public void should_get_right_car_when_take_the_car_with_right_token() throws ParkingLotFullException {
+    public void should_get_right_car_when_take_the_car_with_right_token() throws ParkingLotFullException, NotFoundCarException {
         ParkingLot parkingLot1 = new ParkingLot(1);
         ParkingLot parkingLot2 = new ParkingLot(1);
         List<ParkingLot> parkingLots = Arrays.asList(parkingLot1, parkingLot2);
@@ -56,5 +57,16 @@ public class ParkingBoyTest {
         parkingBoy.parkCar(car2);
         Car car = parkingBoy.takeCar(token);
         assertEquals(car1,car);
+    }
+
+    @Test(expected = NotFoundCarException.class)
+    public void should_throw_not_found_exception_when_take_the_car_with_wrong_token() throws ParkingLotFullException, NotFoundCarException {
+        ParkingLot parkingLot1 = new ParkingLot(1);
+        ParkingLot parkingLot2 = new ParkingLot(1);
+        List<ParkingLot> parkingLots = Arrays.asList(parkingLot1, parkingLot2);
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
+        Car car1 = new Car();
+        parkingBoy.parkCar(car1);
+        parkingBoy.takeCar(new Token());
     }
 }
